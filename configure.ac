@@ -23,9 +23,9 @@ AC_SUBST(permmask)
 AC_SUBST(maxline)
 
 
-AC_CHECK_LIB([gdbm], [gdbm_open])
+AC_CHECK_LIB([gdbm], [gdbm_open],,[AC_MSG_ERROR([libgdbm not found.])])
 
-AC_CHECK_LIB([ldap],[ldap_init])
+AC_CHECK_LIB([ldap],[ldap_init],,[AC_MSG_ERROR([libldap not found.])])
 AC_CHECK_FUNCS([ldap_set_option])
 
 AC_CHECK_FUNCS([iconv])
