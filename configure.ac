@@ -30,6 +30,8 @@ AC_CHECK_FUNCS([ldap_set_option])
 
 AC_CHECK_FUNCS([iconv])
 
+AC_CHECK_FUNCS([strcasestr])
+
 AC_DEFINE_UNQUOTED(UMASK,$permmask)
 AC_DEFINE_UNQUOTED(MAXLINE,$maxline)
 AC_DEFINE_UNQUOTED(DEFAULT_MTA,$mta)

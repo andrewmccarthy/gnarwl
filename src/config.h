@@ -20,6 +20,7 @@ struct conf {
   char *mta;		// Path to the MTA
   char *mta_opts;	// Optional arguments for the MTA
   char *blist;		// Path to dbfile, containing address deny patterns
+  char *nlist;		// Path to dbfile, containing address noreply patterns
   char *mailheader;	// Path to the txtfile, containing standard header
   char *mailfooter;	// Path to the txtfile, containing standard footer
   char *map_sender;	// Macroname for "From:" header

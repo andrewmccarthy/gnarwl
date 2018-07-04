@@ -102,6 +102,12 @@ badheaders _HOMEDIR_/badheaders.db
 # Empty to disable this feature.
 blacklist _HOMEDIR_/blacklist.db
 
+# Gnarwl will never autoreply to emailaddresses that (partially) match 
+# any noreply pattern (useful for preventing autoreplies to noreply,
+# mailer-daemon, and other automated senders .). Leave Empty to disable this
+# feature.
+noreply _HOMEDIR_/noreply.db
+
 # The contents of this textfile are pasted in front of each outgoing mail.
 forceheader _HOMEDIR_/header.txt
 

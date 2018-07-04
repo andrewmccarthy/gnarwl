@@ -57,3 +57,5 @@ Improvements
     StartTLS is used.
 *   New config option *starttls*.
 *   New config option *deref* allows control of LDAP alias dereferencing.
+*   Configurable patterns of from addresses to ignore such as notification
+    addresses like noreply@...

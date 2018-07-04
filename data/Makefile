@@ -20,4 +20,5 @@ install:
 	install -m 600 gnarwl.cfg $(DESTDIR)$(CONFDIR)
 	cat badheaders.txt | $(DESTDIR)$(SBINDIR)/$(SBIN) -a $(DESTDIR)$(HOMEDIR)/badheaders.db
 	cat blacklist.txt | $(DESTDIR)$(SBINDIR)/$(SBIN) -a $(DESTDIR)$(HOMEDIR)/blacklist.db
+	cat noreply.txt | $(DESTDIR)$(SBINDIR)/$(SBIN) -a $(DESTDIR)$(HOMEDIR)/noreply.db
 

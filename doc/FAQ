@@ -28,6 +28,12 @@ another one too soon. The badheaders may be used to prevent gnarwl from
 replying to a mailing list.
 
 -----
+Q: What's the difference between badheaders and noreply?
+A: Badheaders must match the entire line exactly. Noreply will match partial
+patterns *in the From: header only*. Patterns in noreply should be things
+like "noreply", "no-reply", "mailer-daemon", etc.
+
+-----
 Q: Someone mailed me back an emailbounce, saying gnarwl failed.
 A: This happens whenever gnarwl exits with EXIT_FAILURE. Normally this
 should not happen, or better said: A user is not able to provoke this

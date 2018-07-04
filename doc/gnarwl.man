@@ -149,7 +149,7 @@ Path to a database file, containing matching patterns for the mailheader.
 If an entry stored in this file matches a line in the header exactly, then
 this mail will be ignored by
 .B gnarwl
-. (useful to avoid sending automatic replies to mailing lists). This feature
+(useful to avoid sending automatic replies to mailing lists). This feature
 is deactivated by default.
 
 .IP "blacklist <filename>"
@@ -159,6 +159,14 @@ is not allowed
 to generate automatic replies for (useful to prevent automatic replies from 
 addresses, which are shared by several people). This feature is deactivated 
 by default.
+
+.IP "noreply <filename>"
+Path to a database file, containing matching patterns for the From: header only.
+If an entry stored in this file matches anywhere in the From: header, then
+this mail will be ignored by
+.B gnarwl
+(useful to avoid sending automatic replies to notification addresses). This
+feature is deactivated by default.
 
 .IP "forceheader <filename>"
 Path to a text file, containing a standardized header, that is to be 
@@ -267,6 +275,13 @@ herin.
 .B gnarwl 
 will ignore mail, it is able to match a headerline with an entry in
 this file. Case is significant, no wildcards are expanded.
+.RE
+.P
+.I _HOMEDIR_/noreply
+.RS
+.B gnarwl 
+will ignore mail, if it is able to match any entry in this this file to any
+part of the From: header. Case is ignored, no wildcards are expanded.
 .RE
 .P
 .I _HOMEDIR_/header.txt

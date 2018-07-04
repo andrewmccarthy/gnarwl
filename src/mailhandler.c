@@ -13,6 +13,7 @@
 #include <conf.h>
 #include "mailhandler.h"
 #include "config.h"
+#include "gdbm.h"
 #include "util.h"
 #include "dbaccess.h"
 
@@ -36,6 +37,11 @@ GDBM_FILE dbf_b=NULL;
  * Filepointer to the mailfilter
  */
 GDBM_FILE dbf_f=NULL;
+
+/**
+ * Filepointer to the noreply list
+ */
+GDBM_FILE dbf_n=NULL;
 
 
 void addAddr(const char* adr) {
@@ -138,6 +144,32 @@ void readFromSTDIN(void) {
     ibuf[strlen(ibuf)-1]='\0';
     
     if (dbContains(ibuf,dbf_f)) mail_status=mail_status|MAIL_BADHEADER;
+
+    // Check for noreply substrings
+    if (dbf_n!=NULL && strncmp(ibuf, "From:", 5)==0) {
+      datum key, nextkey;
+      char *compresult;
+
+      key = gdbm_firstkey(dbf_n);
+      while (key.dptr!=NULL) {
+#ifdef HAVE_STRCASESTR
+        compresult = strcasestr(ibuf, key.dptr);
+#else
+        compresult = strstr(ibuf, key.dptr);
+#endif
+        if (compresult!=NULL) {
+          // Found one, break out of loop
+          mail_status = mail_status | MAIL_BADHEADER;
+          free(key.dptr);
+          key.dptr=NULL;
+        }
+        else {
+          nextkey = gdbm_nextkey(dbf_n, key);
+          free(key.dptr);
+          key = nextkey;
+        }
+      }
+    }
     
     if (bbuf==NULL) cpyStr(&bbuf,ibuf);
     else {
@@ -181,11 +213,18 @@ int receiveMail(char** recv, const char* sndr) {
       syslog(LOG_MAIL|LOG_WARNING,"WARN/IO %s",cfg.mfilter);
     }
   }
-  
+
   if (cfg.blist!=NULL) {
     dbf_b=dbOpen(cfg.blist,GDBM_READER);
     if (dbf_b==NULL && (verbose>=LVL_WARN) ) { 
       syslog(LOG_MAIL|LOG_WARNING,"WARN/IO %s",cfg.blist);
+    }
+  }
+
+  if (cfg.nlist!=NULL) {
+    dbf_n=dbOpen(cfg.nlist,GDBM_READER);
+    if (dbf_n==NULL && (verbose>=LVL_WARN) ) {
+      syslog(LOG_MAIL|LOG_WARNING,"WARN/IO %s",cfg.nlist);
     }
   }
 
@@ -207,6 +246,7 @@ int receiveMail(char** recv, const char* sndr) {
 
   dbClose(dbf_f);
   dbClose(dbf_b);
+  dbClose(dbf_n);
   
   if (verbose>=LVL_DEBUG) {
     syslog(LOG_MAIL|LOG_DEBUG,"DEBUG/MAIL Code: %d MessageID: %s",mail_status,messageid);

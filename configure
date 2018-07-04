@@ -2851,6 +2851,18 @@ fi
 done
 
 
+for ac_func in strcasestr
+do :
+  ac_fn_c_check_func "$LINENO" "strcasestr" "ac_cv_func_strcasestr"
+if test "x$ac_cv_func_strcasestr" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_STRCASESTR 1
+_ACEOF
+
+fi
+done
+
+
 cat >>confdefs.h <<_ACEOF
 #define UMASK $permmask
 _ACEOF

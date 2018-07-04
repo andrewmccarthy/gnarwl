@@ -48,6 +48,10 @@ void putEntry(char* key, char* val) {
     cfg.blist=val;
     return;
   }
+  if (!strcasecmp(key,"noreply")) {
+    cfg.nlist=val;
+    return;
+  }
   if (!strcasecmp(key,"forceheader")) {
     cfg.mailheader=val;
     return;
