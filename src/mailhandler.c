@@ -159,6 +159,9 @@ void readFromSTDIN(void) {
 #endif
         if (compresult!=NULL) {
           // Found one, break out of loop
+          if (verbose>=LVL_INFO) {
+            syslog(LOG_MAIL|LOG_INFO,"INFO/MAIL noreply pattern \"%s\" found in \"%s\"", key.dptr, ibuf);
+          }
           mail_status = mail_status | MAIL_BADHEADER;
           free(key.dptr);
           key.dptr=NULL;
